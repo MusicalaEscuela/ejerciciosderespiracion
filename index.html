@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Respira Canto | Musicala</title>
+  <meta name="description" content="Aplicativo interactivo de ejercicios de respiración para canto Musicala." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="logo.png" alt="Musicala" width="500" height="305" />
+        </div>
+        <div>
+          <p class="eyebrow">Canto</p>
+          <h1>Respira Canto</h1>
+        </div>
+      </div>
+      <button class="ghost-btn" id="soundToggle" type="button" aria-pressed="true">🔊 Sonido</button>
+    </header>
+
+    <main>
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="tag">Entrenamiento guiado</p>
+          <h2>Respira mejor, canta con más control.</h2>
+          <p>
+            Practica inhalación baja, apoyo abdominal, pausas y exhalaciones con consonantes.
+            Nada de subir hombros como personaje dramático de novela, gracias. 😌
+          </p>
+          <div class="hero-actions">
+            <button class="primary-btn" id="startRecommended" type="button">Empezar rutina recomendada</button>
+            <button class="secondary-btn" id="buildRoutine" type="button">Crear rutina</button>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="breath-orbit">
+            <div class="pulse-core"></div>
+            <span class="note note-a">S</span>
+            <span class="note note-b">CH</span>
+            <span class="note note-c">F</span>
+            <span class="note note-d">BR</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel practice-panel" id="practicePanel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Ejercicio actual</p>
+              <h2 id="exerciseTitle">Selecciona un ejercicio</h2>
+            </div>
+            <span class="level-pill" id="exerciseLevel">Biblioteca</span>
+          </div>
+
+          <p class="exercise-description" id="exerciseDescription">
+            Elige un ejercicio de la lista o inicia la rutina recomendada para comenzar.
+          </p>
+
+          <div class="visual-stage" id="visualStage">
+            <div class="posture-card">
+              <div class="posture-visual" id="postureVisual" data-phase="ready">
+                <img src="assets/respiracion-perfil.webp" width="960" height="640" alt="Cantante de perfil, con los hombros relajados y una mano sobre el abdomen." />
+                <span class="posture-marker shoulder-marker" aria-hidden="true"></span>
+                <span class="posture-marker abdomen-marker" aria-hidden="true"></span>
+                <span class="abdomen-direction" id="abdomenDirection" aria-hidden="true"></span>
+              </div>
+              <div class="posture-tips">
+                <p class="posture-cue" id="postureCue">Mano sobre el abdomen</p>
+                <p id="phaseInstruction">Relaja mandíbula, cuello y hombros.</p>
+                <small id="soundCue">Respira en silencio por nariz o boca relajada.</small>
+              </div>
+            </div>
+
+            <div class="timer-orb" id="timerOrb">
+              <div class="orb-ring"></div>
+              <div class="orb-content">
+                <span id="phaseName">Listo</span>
+                <strong id="timeLeft">00</strong>
+                <small id="cycleCounter">Ciclo 0 / 0</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline" id="phaseTimeline" aria-label="Línea de fases"></div>
+
+          <div class="control-row">
+            <button class="primary-btn" id="playPauseBtn" type="button">▶ Iniciar</button>
+            <button class="secondary-btn" id="resetBtn" type="button">↺ Reiniciar</button>
+            <button class="ghost-btn" id="nextBtn" type="button">Siguiente</button>
+          </div>
+
+          <div class="mini-stats">
+            <div><span id="sessionMinutes">0</span><small>minutos</small></div>
+            <div><span id="completedCycles">0</span><small>ciclos</small></div>
+            <div><span id="totalSessions">0</span><small>sesiones</small></div>
+          </div>
+        </article>
+
+        <aside class="panel side-panel">
+          <div class="panel-head compact">
+            <div>
+              <p class="eyebrow">Antes de empezar</p>
+              <h2>Chequeo rápido</h2>
+            </div>
+          </div>
+          <img class="stance-image" src="assets/postura-de-pie.webp" width="720" height="480" alt="Cantante de pie, con los pies apoyados y los brazos relajados." />
+          <label class="check-item"><input type="checkbox" /> Cuerpo relajado, pies firmes.</label>
+          <label class="check-item"><input type="checkbox" /> Hombros quietos, sin subir pecho.</label>
+          <label class="check-item"><input type="checkbox" /> Abdomen responde suave al inhalar.</label>
+          <label class="check-item"><input type="checkbox" /> Exhalo sin empujar ni apretar garganta.</label>
+
+          <div class="tip-box">
+            <strong>Regla de oro</strong>
+            <p>La respiración para canto no es llenar aire como globo de feria. Es tomar aire eficiente y soltarlo con control.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="library-section" id="librarySection">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Biblioteca</p>
+            <h2>Ejercicios de respiración</h2>
+          </div>
+          <div class="filter-row" role="tablist" aria-label="Filtros de ejercicios">
+            <button class="filter-btn active" data-filter="todos" type="button">Todos</button>
+            <button class="filter-btn" data-filter="básico" type="button">Básicos</button>
+            <button class="filter-btn" data-filter="control" type="button">Control</button>
+            <button class="filter-btn" data-filter="articulación" type="button">Articulación</button>
+            <button class="filter-btn" data-filter="reto" type="button">Retos</button>
+          </div>
+        </div>
+        <div class="cards-grid" id="exerciseCards"></div>
+      </section>
+
+      <section class="routine-section panel" id="routineBuilder">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Modo clase</p>
+            <h2>Creador de rutina</h2>
+          </div>
+          <button class="ghost-btn" id="closeRoutine" type="button">Cerrar</button>
+        </div>
+        <p class="exercise-description">Selecciona varios ejercicios y ejecútalos en secuencia. Perfecto para docentes o estudiantes que quieren practicar sin ponerse a improvisar el caos. 🎭</p>
+        <div class="routine-layout">
+          <div id="routineOptions" class="routine-options"></div>
+          <div class="routine-summary">
+            <h3>Tu rutina</h3>
+            <ol id="selectedRoutine"></ol>
+            <button class="primary-btn full" id="startCustomRoutine" type="button">Iniciar rutina personalizada</button>
+            <button class="secondary-btn full" id="clearRoutine" type="button">Limpiar selección</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="exerciseCardTemplate">
+    <button class="exercise-card" type="button">
+      <span class="card-tag"></span>
+      <h3></h3>
+      <p></p>
+      <div class="card-meta"><span></span><span></span></div>
+    </button>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
